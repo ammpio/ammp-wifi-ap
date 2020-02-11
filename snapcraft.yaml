@@ -79,6 +79,9 @@ parts:
 
   service:
     plugin: make
+    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
+    source-type: git
+    source-tag: '30'
     override-build: |
       set -ex
       export GOPATH=$(mktemp -d)
