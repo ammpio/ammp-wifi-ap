@@ -78,7 +78,7 @@ parts:
       - $binaries
 
   service:
-    plugin: make
+    plugin: go
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
     source-type: git
     source-tag: '30'
