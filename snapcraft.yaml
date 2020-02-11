@@ -54,7 +54,7 @@ parts:
     plugin: dump
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
     source-type: git
-    source-tag: 30
+    source-tag: '30'
     prime:
       - copyright.hostapd
       - bin/config-internal.sh
