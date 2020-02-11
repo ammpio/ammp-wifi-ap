@@ -1,17 +1,22 @@
-name: wifi-ap
+name: ammp-wifi-ap
 version: 30
 confinement: strict
-summary: WiFi Access Point based on hostapd
+summary: WiFi Access Point based on hostapd - for AMMP Edge devices
 description: |
   This snap is implementing a WiFi access point based on hostapd and allows
-  easily to share a internet connection or just create a network others can
+  to easily share a internet connection or just create a network others can
   easily connect to.
   Please find the source of this snap at:
   https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
 grade: stable
+base: core18
+
+architectures:
+  - build-on: amd64
+  - build-on: armhf
 
 slots:
-  control:
+  wifi-ap-control:
     interface: content
     content: socket-directory
     write:
@@ -47,7 +52,9 @@ apps:
 parts:
   common:
     plugin: dump
-    source: .
+    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
+    source-type: git
+    source-tag: 30
     prime:
       - copyright.hostapd
       - bin/config-internal.sh
