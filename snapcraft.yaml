@@ -1,5 +1,5 @@
 name: ammp-wifi-ap
-version: 30
+version: '30'
 confinement: strict
 summary: WiFi Access Point based on hostapd - for AMMP Edge devices
 description: |
