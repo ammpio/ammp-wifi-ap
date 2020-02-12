@@ -9,7 +9,7 @@ description: |
   Please find the source of this snap at:
   https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
 
-  grade: stable
+grade: stable
 base: core18
 
 architectures:
