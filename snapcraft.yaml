@@ -63,6 +63,7 @@ parts:
     stage-packages:
       - iw
       - wireless-tools
+      - libiw30
     organize:
       sbin: bin
     filesets:
@@ -138,5 +139,7 @@ parts:
     plugin: nil
     stage-packages:
       - network-manager
+      - libatm1
+      - libslang2
     organize:
       usr/bin/nmcli: bin/nmcli
