@@ -78,10 +78,11 @@ parts:
       - $binaries
 
   service:
-    plugin: go
+    plugin: make
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
     source-type: git
     source-tag: '30'
+    build-snaps: [go]
     override-build: |
       set -ex
       export GOPATH=$(mktemp -d)
