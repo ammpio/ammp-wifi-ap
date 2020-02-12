@@ -82,7 +82,7 @@ parts:
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
     source-type: git
     source-tag: '30'
-    build-snaps: [go]
+    build-snaps: [go/1.9/stable]
     override-build: |
       set -ex
       export GOPATH=$(mktemp -d)
