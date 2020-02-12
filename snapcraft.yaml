@@ -8,19 +8,13 @@ description: |
   easily connect to.
   Please find the source of this snap at:
   https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
-grade: stable
+
+  grade: stable
 base: core18
 
 architectures:
   - build-on: amd64
   - build-on: armhf
-
-slots:
-  control:
-    interface: content
-    content: socket-directory
-    write:
-      - $SNAP_DATA/sockets
 
 apps:
   config:
@@ -40,11 +34,6 @@ apps:
       - network-control
       - firewall-control
       - network-manager
-  automatic-setup:
-    command: bin/automatic-setup.sh
-    daemon: simple
-    plugs:
-      - network
 
 parts:
   common:
@@ -58,7 +47,6 @@ parts:
       - bin/ap.sh
       - bin/helper.sh
       - conf/default-config
-
   network-utils:
     plugin: nil
     stage-packages:
@@ -73,7 +61,6 @@ parts:
         - bin/iwconfig
     prime:
       - $binaries
-
   service:
     plugin: make
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
@@ -99,7 +86,6 @@ parts:
         cp -f "$d" $SNAPCRAFT_PART_INSTALL/bin/
       done)
       rm -rf "$GOPATH"
-
   dnsmasq:
     plugin: make
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
@@ -116,7 +102,6 @@ parts:
         - bin/dnsmasq
     prime:
       - $binaries
-
   hostapd:
     plugin: make
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
@@ -137,7 +122,6 @@ parts:
         - bin/hostapd_cli
     prime:
       - $binaries
-
   nmcli:
     plugin: nil
     stage-packages:
@@ -146,3 +130,10 @@ parts:
       - libslang2
     organize:
       usr/bin/nmcli: bin/nmcli
+
+slots:
+  control:
+    interface: content
+    content: socket-directory
+    write:
+      - $SNAP_DATA/sockets
