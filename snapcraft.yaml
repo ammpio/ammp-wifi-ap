@@ -134,6 +134,6 @@ parts:
 slots:
   control:
     interface: content
-    content: socket-directory
     write:
       - $SNAP_DATA/sockets
+    content: blah
