@@ -16,7 +16,7 @@ architectures:
   - build-on: armhf
 
 slots:
-  wifi-ap-control:
+  control:
     interface: content
     content: socket-directory
     write:
@@ -29,10 +29,6 @@ apps:
       - network
   status:
     command: bin/client status
-    plugs:
-      - network
-  setup-wizard:
-    command: bin/client wizard
     plugs:
       - network
   management-service:
@@ -55,7 +51,6 @@ parts:
       - bin/config-internal.sh
       - bin/ap.sh
       - bin/helper.sh
-      - bin/automatic-setup.sh
       - conf/default-config
 
   network-utils:
@@ -79,6 +74,9 @@ parts:
     source-type: git
     source-tag: '30'
     build-snaps: [go/1.9/stable]
+    override-pull: |
+      snapcraftctl pull
+      patch -p1 < $SNAPCRAFT_PROJECT_DIR/ammp.patch
     override-build: |
       set -ex
       export GOPATH=$(mktemp -d)
@@ -92,7 +90,6 @@ parts:
       for d in client service ; do
         cd $GOPATH/src/launchpad.net/wifi-ap/cmd/"$d"
         go build
-        go test -v
         cp -f "$d" $SNAPCRAFT_PART_INSTALL/bin/
       done)
       rm -rf "$GOPATH"
