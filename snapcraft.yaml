@@ -16,7 +16,7 @@ architectures:
   - build-on: armhf
 
 slots:
-  wifi-ap-control:
+  control:
     interface: content
     content: socket-directory
     write:
