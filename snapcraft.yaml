@@ -36,6 +36,7 @@ apps:
     plugs:
       - network
   management-service:
+    adapter: full
     command: bin/service
     daemon: simple
     plugs:
@@ -43,6 +44,11 @@ apps:
       - network-control
       - firewall-control
       - network-manager
+  automatic-setup:
+    command: bin/automatic-setup.sh
+    daemon: simple
+    plugs:
+      - network
 
 parts:
   common:
