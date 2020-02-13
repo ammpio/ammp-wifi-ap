@@ -132,6 +132,11 @@ parts:
       usr/bin/nmcli: bin/nmcli
 
 slots:
+  something-else:
+    interface: content
+    content: hello
+    read:
+      - $SNAP/bin
   control:
     interface: content
     write:
