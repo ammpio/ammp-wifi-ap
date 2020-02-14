@@ -69,12 +69,13 @@ parts:
     build-snaps: [go/1.9/stable]
     override-pull: |
       echo "Snapcraft project dir: $SNAPCRAFT_PROJECT_DIR"
-      echo "Snapcraft root dir: $ROOT_PROJECT_DIR"
       cd $SNAPCRAFT_PROJECT_DIR
       pwd
-      wget https://github.com/ammpio/ammp-wifi-ap/blob/master/ammp.patch
+      echo "Files:"
+      ls
       snapcraftctl pull
       cd $SNAPCRAFT_PART_SRC
+      pwd
       patch -p1 < $SNAPCRAFT_PROJECT_DIR/ammp.patch
     override-build: |
       set -ex
