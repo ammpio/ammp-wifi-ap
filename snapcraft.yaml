@@ -14,7 +14,7 @@ base: core18
 
 architectures:
   - build-on: amd64
-#  - build-on: armhf
+ - build-on: armhf
 
 apps:
   config:
@@ -36,31 +36,31 @@ apps:
       - network-manager
 
 parts:
-  # common:
-  #   plugin: dump
-  #   source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
-  #   source-type: git
-  #   source-tag: '30'
-  #   prime:
-  #     - copyright.hostapd
-  #     - bin/config-internal.sh
-  #     - bin/ap.sh
-  #     - bin/helper.sh
-  #     - conf/default-config
-  # network-utils:
-  #   plugin: nil
-  #   stage-packages:
-  #     - iw
-  #     - wireless-tools
-  #     - libiw30
-  #   organize:
-  #     sbin: bin
-  #   filesets:
-  #     binaries:
-  #       - bin/iw
-  #       - bin/iwconfig
-  #   prime:
-  #     - $binaries
+  common:
+    plugin: dump
+    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
+    source-type: git
+    source-tag: '30'
+    prime:
+      - copyright.hostapd
+      - bin/config-internal.sh
+      - bin/ap.sh
+      - bin/helper.sh
+      - conf/default-config
+  network-utils:
+    plugin: nil
+    stage-packages:
+      - iw
+      - wireless-tools
+      - libiw30
+    organize:
+      sbin: bin
+    filesets:
+      binaries:
+        - bin/iw
+        - bin/iwconfig
+    prime:
+      - $binaries
   service:
     plugin: make
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
@@ -69,15 +69,10 @@ parts:
     build-snaps: [go/1.9/stable]
     build-packages: [wget]
     override-pull: |
-      echo "Snapcraft project dir: $SNAPCRAFT_PROJECT_DIR"
       cd $SNAPCRAFT_PROJECT_DIR
-      pwd
       wget https://raw.githubusercontent.com/ammpio/ammp-wifi-ap/master/ammp.patch
-      echo "Files:"
-      ls
       snapcraftctl pull
       cd $SNAPCRAFT_PART_SRC
-      pwd
       patch -p1 < $SNAPCRAFT_PROJECT_DIR/ammp.patch
     override-build: |
       set -ex
@@ -95,50 +90,50 @@ parts:
         cp -f "$d" $SNAPCRAFT_PART_INSTALL/bin/
       done)
       rm -rf "$GOPATH"
-  # dnsmasq:
-  #   plugin: make
-  #   source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
-  #   source-type: git
-  #   source-branch: dnsmasq/2.75
-  #   build-packages:
-  #     - build-essential
-  #   make-parameters:
-  #     - PREFIX=/
-  #   organize:
-  #     sbin/dnsmasq: bin/dnsmasq
-  #   filesets:
-  #     binaries:
-  #       - bin/dnsmasq
-  #   prime:
-  #     - $binaries
-  # hostapd:
-  #   plugin: make
-  #   source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
-  #   source-type: git
-  #   source-branch: hostapd/2.8
-  #   build-packages:
-  #     - build-essential
-  #     - pkg-config
-  #     - libnl-3-dev
-  #     - libnl-genl-3-dev
-  #     - libnl-route-3-dev
-  #     - libssl-dev
-  #   make-parameters:
-  #     - BINDIR=/bin
-  #   filesets:
-  #     binaries:
-  #       - bin/hostapd
-  #       - bin/hostapd_cli
-  #   prime:
-  #     - $binaries
-  # nmcli:
-  #   plugin: nil
-  #   stage-packages:
-  #     - network-manager
-  #     - libatm1
-  #     - libslang2
-  #   organize:
-  #     usr/bin/nmcli: bin/nmcli
+  dnsmasq:
+    plugin: make
+    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
+    source-type: git
+    source-branch: dnsmasq/2.75
+    build-packages:
+      - build-essential
+    make-parameters:
+      - PREFIX=/
+    organize:
+      sbin/dnsmasq: bin/dnsmasq
+    filesets:
+      binaries:
+        - bin/dnsmasq
+    prime:
+      - $binaries
+  hostapd:
+    plugin: make
+    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
+    source-type: git
+    source-branch: hostapd/2.8
+    build-packages:
+      - build-essential
+      - pkg-config
+      - libnl-3-dev
+      - libnl-genl-3-dev
+      - libnl-route-3-dev
+      - libssl-dev
+    make-parameters:
+      - BINDIR=/bin
+    filesets:
+      binaries:
+        - bin/hostapd
+        - bin/hostapd_cli
+    prime:
+      - $binaries
+  nmcli:
+    plugin: nil
+    stage-packages:
+      - network-manager
+      - libatm1
+      - libslang2
+    organize:
+      usr/bin/nmcli: bin/nmcli
 
 slots:
   wifi-ap-control:
