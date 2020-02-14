@@ -132,13 +132,8 @@ parts:
       usr/bin/nmcli: bin/nmcli
 
 slots:
-  something-else:
+  wifi-ap-control:
     interface: content
-    content: hello
-    read:
-      - $SNAP/bin
-  control:
-    interface: content
+    content: socket-directory
     write:
       - $SNAP_DATA/sockets
-    content: blah
