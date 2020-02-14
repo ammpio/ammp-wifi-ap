@@ -71,7 +71,7 @@ parts:
     build-packages: [wget]
     override-pull: |
       cd $SNAPCRAFT_PROJECT_DIR
-      wget https://raw.githubusercontent.com/ammpio/ammp-wifi-ap/master/ammp.patch
+      wget https://raw.githubusercontent.com/ammpio/ammp-wifi-ap/remote-build/ammp.patch
       snapcraftctl pull
       cd $SNAPCRAFT_PART_SRC
       patch -p1 < $SNAPCRAFT_PROJECT_DIR/ammp.patch
