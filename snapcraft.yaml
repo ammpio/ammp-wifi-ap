@@ -68,11 +68,14 @@ parts:
     source-tag: '30'
     build-snaps: [go/1.9/stable]
     override-pull: |
-      snapcraftctl pull
+      echo "Snapcraft project dir: $SNAPCRAFT_PROJECT_DIR"
+      echo "Snapcraft root dir: $ROOT_PROJECT_DIR"
+      cd $SNAPCRAFT_PROJECT_DIR
       pwd
-      ls
       wget https://github.com/ammpio/ammp-wifi-ap/blob/master/ammp.patch
-      patch -p1 < ammp.patch
+      snapcraftctl pull
+      cd $SNAPCRAFT_PART_SRC
+      patch -p1 < $SNAPCRAFT_PROJECT_DIR/ammp.patch
     override-build: |
       set -ex
       export GOPATH=$(mktemp -d)
