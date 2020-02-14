@@ -29,7 +29,7 @@ apps:
     command: bin/service
     daemon: simple
     restart-condition: always
-    restart-delay: 10
+    restart-delay: 10s
     plugs:
       - network-bind
       - network-control
