@@ -67,10 +67,12 @@ parts:
     source-type: git
     source-tag: '30'
     build-snaps: [go/1.9/stable]
+    build-packages: [wget]
     override-pull: |
       echo "Snapcraft project dir: $SNAPCRAFT_PROJECT_DIR"
       cd $SNAPCRAFT_PROJECT_DIR
       pwd
+      wget https://raw.githubusercontent.com/ammpio/ammp-wifi-ap/master/ammp.patch
       echo "Files:"
       ls
       snapcraftctl pull
