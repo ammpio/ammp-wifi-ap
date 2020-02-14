@@ -69,6 +69,7 @@ parts:
     build-snaps: [go/1.9/stable]
     override-pull: |
       snapcraftctl pull
+      wget https://github.com/ammpio/ammp-wifi-ap/blob/master/ammp.patch
       patch -p1 < ammp.patch
     override-build: |
       set -ex
