@@ -26,11 +26,10 @@ apps:
     plugs:
       - network
   management-service:
-    # A pause appears to be necessary to be able to initialize successfully on boot
-    pre-command: /bin/sleep 10
     command: bin/service
     daemon: simple
     restart-condition: always
+    restart-delay: 10
     plugs:
       - network-bind
       - network-control
