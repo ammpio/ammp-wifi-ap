@@ -26,9 +26,11 @@ apps:
     plugs:
       - network
   management-service:
-    adapter: full
+    # A pause appears to be necessary to be able to initialize successfully on boot
+    pre-command: /bin/sleep 10
     command: bin/service
     daemon: simple
+    restart-condition: always
     plugs:
       - network-bind
       - network-control
@@ -136,7 +138,7 @@ parts:
       usr/bin/nmcli: bin/nmcli
 
 slots:
-  wifi-ap-control:
+  control:
     interface: content
     content: socket-directory
     write:
