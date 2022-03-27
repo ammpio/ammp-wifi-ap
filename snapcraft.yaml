@@ -10,6 +10,7 @@ description: |
   https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
 
 grade: stable
+base: core18
 
 architectures:
   - build-on: armhf
@@ -71,12 +72,8 @@ parts:
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
     source-type: git
     source-tag: 'stable'
-    build-packages: [wget]
     override-pull: |
-      cd $SNAPCRAFT_PROJECT_DIR
-      wget https://raw.githubusercontent.com/ammpio/ammp-wifi-ap/remote-build/ammp.patch
       snapcraftctl pull
-      cd $SNAPCRAFT_PART_SRC
       patch -p1 < $SNAPCRAFT_PROJECT_DIR/ammp.patch
     override-build: |
       set -ex
