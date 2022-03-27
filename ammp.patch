@@ -1,9 +1,12 @@
 diff --git a/cmd/service/main.go b/cmd/service/main.go
-index 94084d8..3390c1a 100644
+index 94084d8..ae5e679 100644
 --- a/cmd/service/main.go
 +++ b/cmd/service/main.go
-@@ -22,22 +22,11 @@ import (
- 	"time"
+@@ -19,26 +19,11 @@ import (
+ 	"os"
+ 	"os/signal"
+ 	"syscall"
+-	"time"
  )
  
 -const snapSetupDoneFilePath = "/var/snap/wifi-ap/common/.setup_done"
@@ -22,8 +25,7 @@ index 94084d8..3390c1a 100644
 -		}
 -		time.Sleep(time.Second/2)
 -	}
-+	// Sleep 10 seconds to get system to settle before starting AP
-+	time.Sleep(10*time.Second)
- 
+-
  	c := make(chan os.Signal, 1)
  	signal.Notify(c, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+ 	go func(s *service) {
