@@ -63,15 +63,12 @@ parts:
     prime:
       - $binaries
   
-  go:
-    source-tag: go1.9.2
-
   service:
-    after: [go]
     plugin: make
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
     source-type: git
     source-tag: 'stable'
+    build-snaps: [go/1.9/stable]
     override-pull: |
       snapcraftctl pull
       patch -p1 < $SNAPCRAFT_PROJECT_DIR/ammp.patch
