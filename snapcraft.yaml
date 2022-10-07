@@ -1,5 +1,5 @@
 name: ammp-wifi-ap
-version: '30a'
+version: '30b'
 confinement: strict
 summary: WiFi Access Point based on hostapd - for AMMP Edge devices
 description: |
@@ -10,7 +10,7 @@ description: |
   https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
 
 grade: stable
-base: core18
+base: core22
 
 architectures:
   - build-on: armhf
@@ -56,22 +56,19 @@ parts:
       - wireless-tools
     organize:
       sbin: bin
-    filesets:
-      binaries:
-        - bin/iw
-        - bin/iwconfig
     prime:
-      - $binaries
+      - bin/iw
+      - bin/iwconfig
   
   service:
     plugin: make
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/wifi-ap
     source-type: git
     source-tag: 'stable'
-    build-snaps: [go/1.10/stable]
+    build-snaps: [go/1.16/stable]
     override-pull: |
-      snapcraftctl pull
-      patch -p1 < $SNAPCRAFT_PROJECT_DIR/ammp.patch
+      craftctl default
+      patch -p1 < $CRAFT_PROJECT_DIR/ammp.patch
     override-build: |
       set -ex
       export GOPATH=$(mktemp -d)
@@ -80,13 +77,14 @@ parts:
       cp -a cmd/ "$src_path"
       cp -a conf/ "$src_path"
       cd "$src_path"
-      go get -t -d ...
-      mkdir -p $SNAPCRAFT_PART_INSTALL/bin/
+      go mod init
+      go mod tidy
+      mkdir -p $CRAFT_PART_INSTALL/bin/
       for d in client service ; do
         cd $GOPATH/src/launchpad.net/wifi-ap/cmd/"$d"
         go build
         go test -v
-        cp -f "$d" $SNAPCRAFT_PART_INSTALL/bin/
+        cp -f "$d" $CRAFT_PART_INSTALL/bin/
       done)
       rm -rf "$GOPATH"
 
@@ -101,11 +99,8 @@ parts:
       - PREFIX=/
     organize:
       sbin/dnsmasq: bin/dnsmasq
-    filesets:
-      binaries:
-        - bin/dnsmasq
     prime:
-      - $binaries
+      - bin/dnsmasq
 
   hostapd:
     plugin: make
@@ -121,12 +116,9 @@ parts:
       - libssl-dev
     make-parameters:
       - BINDIR=/bin
-    filesets:
-      binaries:
-        - bin/hostapd
-        - bin/hostapd_cli
     prime:
-      - $binaries
+      - bin/hostapd
+      - bin/hostapd_cli
 
   nmcli:
     plugin: nil
